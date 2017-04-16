@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Rinc Full Guesta</title>
+</head>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+<script>
+    var results = [];
+
+    var START = 1;
+    var END = 1; //83
+    var MAX_DIVS = 10;
+
+    function renderPage() {
+        results = _.sortBy(results, 'id');
+        for (var i = 0; i < results.length; i++) {
+            $('results_root').append(results[i].html);
+        }
+    }
+
+    for (var i = 1; i <= 1; i++) {
+        setTimeout((function () {
+            $.ajax({
+                url: "http://rinc.narod.ru/gb/" + this.i,
+                type: "GET",
+                dataType: "html",
+                success: function (data) {
+                    $(data).find(".report-spam-target")
+                            .each(function (div) {
+                                var re = /^ENTRYID(\d+)$/;
+                                results.push({
+                                    id: +(re.exec(div.id)[1]),
+                                    html: div.outerHTML
+                                });
+                                if (results.length >= MAX_DIVS) {
+                                    renderPage();
+                                }
+                            })
+                }
+            });
+        }).bind({i: i}), i * 1000);
+    }
+
+</script>
+<body>
+<div id="results_root">
+
+</div>
+</body>
+</html>

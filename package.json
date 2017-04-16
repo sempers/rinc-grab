@@ -1,0 +1,9 @@
+{
+  "name": "rinc-grab",
+  "version": "0.0.1",
+  "dependencies":{
+    "underscore": "*",
+    "request": "*",
+    "cheerio": "*"
+  }
+}
